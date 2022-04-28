@@ -91,4 +91,3 @@ def post_edit(request, post_id):
         })
     form.save()
     return redirect('posts:post_detail', post_id=post_id)
-
