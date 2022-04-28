@@ -18,9 +18,9 @@
     </title>
   </head>
   <body>
-    <header>
+    {% block header %}
         {% include 'includes/header.html' %}
-    </header>
+    {% endblock %}
     <main> 
       {% block content %}
         Блок content.

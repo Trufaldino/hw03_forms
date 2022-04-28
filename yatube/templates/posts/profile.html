@@ -1,40 +1,38 @@
 {% extends "base.html" %}
-{% block title %}
-  Профайл пользователя {{ author.get_full_name }}
-{% endblock title %}      
+{% block title %}Профайл пользователя {{author.username}} {% endblock %}
 {% block content %}
-<main>
-  <div class="container py-5">        
-    <h1>Все посты пользователя {{ author.get_full_name }} </h1>
-    <h3>Всего постов: {{ author.posts.count }} </h3>   
-    <article>
-      <ul>
-        <li>
-          Автор: {{ author.get_full_name }}
-          <a href="{{ author.get_full_name }}">все посты пользователя</a>
-        </li>
-        <li>
-          Дата публикации: {{ post.pub_date|date:"d E Y" }} 
-        </li>
-      </ul>
-      <p>
-      <!--
-        [Фокшаны.] Еще переходъ до Фокшанъ, во время котораго я ѣхалъ съ 
-        Монго. Человѣкъ пустой, но съ твердыми, хотя и ложными убѣжденіями.
-        Генерал[у] по этому должно быть случаю, угодно было спрашивать о мое
-        мъ здоровьи.
-        Свинья! К[о]вырялъ носъ и ничего не написалъ — вотъ 2 упрека за 
-        нын[ѣшній]     день. Послѣдній упрекъ становится слишкомъ частъ, 
-        хотя походъ и можетъ служить въ немъ отчасти извиненіемъ. 
-        Отношенія мои съ товарищами становятся такъ пріятны, что мнѣ 
-        жалко бросить штабъ. Здоровье кажется (2) лучше. 
-      --> 
-      </p>
-      <a href="{% url 'posts:post_detail' post.pk %}">подробная информация </a>
-    </article>       
-    <a href="{% url 'posts:group_list' post.group.slug %}">все записи группы</a>        
-    <hr>
-    {% include 'includes/paginator.html' %} 
-  </div>
-</main>
-{% endblock content %}
+    <main>
+        <div class="container py-5">
+            <h1>Все посты пользователя {{ author.get_full_name }} </h1>
+            <h3>Всего постов: {{ author.posts.count }} </h3>
+            {% for post in page_obj %}
+                <article>
+                    <ul>
+                        <li>
+                            Автор: {{ post.author.get_full_name }}
+                            {#              <a href="<!-- -->">все посты пользователя</a>#}
+                        </li>
+                        <li>
+                            Дата публикации: {{ post.pub_date|date:"d E Y" }}
+                        </li>
+                    </ul>
+                    <p>
+                        {{ post.text}}
+                    </p>
+                    <a href="{% url 'posts:post_detail' post.pk %}">подробная информация </a>
+                    {% if post.group %}
+                        <a href="{% url 'posts:group_list' post.group.slug %}">
+                            #{{ post.group }}
+                        </a>
+                    {% endif %}
+                </article>
+                {% if not forloop.last %}
+                    <hr>
+                {% endif %}
+            {% endfor %}
+            <!-- Остальные посты. после последнего нет черты -->
+            {% include "posts/includes/paginator.html" %}
+            <!-- Здесь подключён паджинатор -->
+        </div>
+    </main>
+{% endblock %}
