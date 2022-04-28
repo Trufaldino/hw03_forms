@@ -10,7 +10,6 @@
                     <ul>
                         <li>
                             Автор: {{ post.author.get_full_name }}
-                            {#              <a href="<!-- -->">все посты пользователя</a>#}
                         </li>
                         <li>
                             Дата публикации: {{ post.pub_date|date:"d E Y" }}
@@ -30,9 +29,7 @@
                     <hr>
                 {% endif %}
             {% endfor %}
-            <!-- Остальные посты. после последнего нет черты -->
             {% include "posts/includes/paginator.html" %}
-            <!-- Здесь подключён паджинатор -->
         </div>
     </main>
 {% endblock %}

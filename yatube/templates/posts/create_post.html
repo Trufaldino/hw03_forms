@@ -22,7 +22,6 @@
             {% endif %}>
             {% csrf_token %}            
             <form method="post" 
-
         {% if is_edit %}
             "{% url 'posts:post_edit' form.instance.pk %}"
         {% else %}
