@@ -29,10 +29,8 @@ class Post(models.Model):
         related_name='posts'
     )
 
+    class Meta:
+        ordering = ['pub_date']
+
     def __str__(self):
-        # выводим текст поста
         return self.text
-
-
-class Meta:
-    ordering = ['pub_date']
